@@ -64,12 +64,12 @@ def visualize_type():
 
 #visualize_type()
 
-coded = []
 
 def extract_rare():
+    coded = ""
     for key, value in countlist.iteritems():
         if value == 1:
-            coded.append(key)
+            coded+=key
 
     print coded
 

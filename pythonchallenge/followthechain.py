@@ -14,7 +14,7 @@ i = 87130
 
 longlist = []
 
-for i in range(1000):
+while True:
     response = urllib2.urlopen('http://pythonchallenge.com/pc/def/linkedlist.php?nothing='+str(i))
     j = response.read()
     print j
@@ -24,5 +24,5 @@ for i in range(1000):
 
 print longlist
 
-#this doesn't work; seems like I need an opener and a handler for php? or a post request?
+
 
