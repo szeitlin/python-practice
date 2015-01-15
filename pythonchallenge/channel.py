@@ -1,57 +1,89 @@
 __author__ = 'szeitlin'
 
 
-#import base64
-import codecs
-import string
-#import unicodedata
+
 import urllib2
 import zipfile
 
 # info = urllib2.urlopen('http://pythonchallenge.com/pc/def/channel.html')
 # print info
 
+#if channel.zip already exists, skip this
+target = 'http://pythonchallenge.com/pc/def/channel.zip'
 
-response = urllib2.urlopen('http://pythonchallenge.com/pc/def/channel.zip')
+response = urllib2.urlopen(target)
 
+body = response.read()
 
-with open("channel.txt", 'wb') as myfile:
-    for tup in response:
-        decoded = [codecs.decode(x, 'ascii', 'ignore') for x in tup]
-        #decoded = [codecs.decode(x, 'latin-1', 'replace') for x in tup]
-        chunk = ''.join(decoded) #this returns something human-readable, but in need of further parsing to get rid of ASCII control characters
-        readable = filter(string.printable.__contains__, chunk)
-        #print readable
-        myfile.write(readable)
-        splitted = readable.split() #if you don't do the string.prinatable step, this returns list of code points again???
+with open("channel.zip", 'wb') as myfile:
+    myfile.write(body)
 
-        #once that's parsed into filenames without extra/null unicode characters, can do this:
-        for filename in splitted:
-            print '%5s %s' %(filename, zipfile.is_zipfile(filename))
+#print zipfile.is_zipfile("channel.zip")
 
+myfile = zipfile.ZipFile("channel.zip")
 
-#really what I want to do is look at the readme file inside the zip archive, don't know how to do that 
-
-
-
-# unzipped = zip(*response)
-# print unzipped.read(100)
-#can I open this as utf-8 to begin with-?
-#can I tell what the encoding is?
+# print myfile.printdir()
+#
+# informy = myfile.infolist()
+#
+# commentlist = []
+#
+# for item in informy:
+#     commentlist.append(item.comment)
+#
+# print ''.join(commentlist)
 
 
-# for tup in unzipped:
-#      decoded = [codecs.decode(x, 'latin_1', 'replace') for x in tup] #, errors='ignore')
-     #print decoded
-     #print ''.join(decoded)
 
+readme = myfile.read("readme.txt")
 
-     # for i, c in enumerate(decoded):
-     #    print i, '%04x' % ord(c), unicodedata.category(c),
-     #    try:
-     #        print unicodedata.name(c)
-     #    except ValueError:
-     #        continue
+#print readme
+
+first = myfile.read("90052.txt")
+
+#print first
+
+noted = first.split()
+#print noted
+
+second = myfile.read(noted[-1]+".txt")
+
+#print second
+#splitted = second.split()
+
+#print splitted
+
+lastfile = second
+
+#print myfile.getinfo("90052.txt").comment
+
+commentlist = []
+
+def get_next_file(myfile, lastfile, commentlist):
+    '''
+      This worked correctly, then it said to collect the comments, which I had tried already.
+      Trick was collecting them in the right order while iterating through the list of files, and exiting cleanly.
+
+    Recursion to iterate through the files until you get to something that is not just a number.
+
+    :param myfile: zip file
+    :param lastfile: most recently read .txt file inside the zip file
+    :return: (str) contents of .txt file that specifies the next file to read
+    '''
+    splitted = lastfile.split()
+    #print splitted
+    newname = splitted[-1]+".txt"
+    nextfile = myfile.read(newname)
+    #print nextfile
+    commentlist.append(myfile.getinfo(newname).comment)
+    #print nextfile
+    return get_next_file(myfile, nextfile, commentlist)
+
+try:
+    get_next_file(myfile, lastfile, commentlist)
+except KeyError:
+    print ''.join(commentlist)
+
 
 
 
