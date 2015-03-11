@@ -2,7 +2,7 @@ def count_adjacent_repeats(s):
     '''(str) -> int
     Return the number of occurrences of a character and an adjacent character being the same.
 
-    >>>count_adjacent_repeats('abccdeffggh')
+    >>> count_adjacent_repeats('abccdeffggh')
     3
     '''
 
@@ -13,3 +13,6 @@ def count_adjacent_repeats(s):
             repeats = repeats + 1
 
     return repeats
+
+import doctest
+doctest.testmod()

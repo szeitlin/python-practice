@@ -6,7 +6,7 @@ def bubble_sort(seq):
 
     list (int) -> list (int)
     >>> bubble_sort([3,2,8,7,6,5,4,1])
-    [1,2,3,4,5,6,7,8]
+    [1, 2, 3, 4, 5, 6, 7, 8]
     """
     #identify first item and the item after it in the sequence
 
@@ -34,4 +34,7 @@ def bubble_sort(seq):
                 i += 1
 
 
-    print seq
+    return seq
+
+import doctest
+doctest.testmod()

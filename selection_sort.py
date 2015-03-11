@@ -7,8 +7,8 @@ def selection_sort (seq):
 
     list (int) -> list (int)
 
-    >>>selection_sort[2,3,4,7,6,5,1,8]
-    [1,2,3,4,5,6,7,8]
+    >>> selection_sort([2,3,4,7,6,5,1,8])
+    [1, 2, 3, 4, 5, 6, 7, 8]
     '''
     i = 0
     newseq = []
@@ -17,6 +17,8 @@ def selection_sort (seq):
         newseq.append(j)
         seq.remove(j)   #remove the item from the list, as opposed to pop(), which refers to the index
 
-    print newseq
+    return newseq
 
-selection_sort([2,3,4,7,6,5,1,8])
+import doctest
+doctest.testmod()
+
