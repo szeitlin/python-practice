@@ -11,9 +11,14 @@ def reverse_string(word):
     'ham'
 
     """
+    # charlist = [char for char in word]
+    # charlist.reverse() #in place
+    # return ''.join(charlist)
+
     charlist = [char for char in word]
-    charlist.reverse() #in place
-    return ''.join(charlist)
+    backwards = [charlist.pop() for i in range(len(charlist))]
+
+    return ''.join(backwards)
 
 import doctest
 doctest.testmod()
