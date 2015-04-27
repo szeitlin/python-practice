@@ -17,10 +17,8 @@ def merge_sorted_lists(left, right, stop, newlist):
     :return newlist: list
 
     """
-    print newlist
-    print "newlist is now this long: " + str(len(newlist))
-
-
+    # print newlist
+    # print "newlist is now this long: " + str(len(newlist))
 
     while len(newlist) != stop:
         #print "newlist not full length yet"
