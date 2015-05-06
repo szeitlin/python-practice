@@ -53,6 +53,9 @@ def merge_sorted_lists(left, right, stop, newlist):
     if len(newlist) == stop:
         #print newlist
         return newlist
+    
+    assert False, "this should never print"
+    
 
 def prepare_to_merge(list1, list2):
     """ Convert lists and calculate stopping criteria.
