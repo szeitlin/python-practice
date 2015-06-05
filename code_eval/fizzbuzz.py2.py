@@ -33,21 +33,30 @@ __author__ = 'szeitlin'
 # "N" is in range [21, 100]
 #
 # """
+import sys
 
-def get_params(infile):
+test_cases = sys.argv[1]
+
+def get_params(test_cases):
     """
     emits parameters for generating the sequence.
 
-    :param infile: each line contains 3 numbers that are space delimited.
+    :param test_cases: file, where each line contains 3 numbers that are space delimited.
+    must ignore if line is blank
     :return: one list of parameters at a time
     """
-    with open(infile, 'r') as infile:
+    with open(test_cases, 'r') as infile:
         for line in infile:
-            temp = line.split(' ')
-            params = [int(x) for x in temp if len(x) < 4]
-            if len(params) > 0:
-                yield params
-
+            if len(line)<0:
+               continue
+            else:
+                try:
+                    temp = line.split(' ')
+                    params = [int(x) for x in temp if len(x) < 4]
+                    if len(params) > 0:
+                        yield params
+                except Exception:
+                    continue
 
 def make_list(infile):
     """
@@ -72,8 +81,8 @@ def make_list(infile):
                 elif i%params[1] == 0:
                     outlist.append('B')
                 else:
-                    outlist.append(i)
-            print outlist
+                    outlist.append(str(i))
+            print ' '.join(outlist)
 
         except StopIteration:
             break
@@ -82,4 +91,4 @@ def make_list(infile):
 
 
 
-make_list("test1.txt")
+make_list(test_cases)
