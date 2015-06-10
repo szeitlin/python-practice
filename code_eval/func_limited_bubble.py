@@ -45,9 +45,11 @@ def sorcery(p):
 
             steps = int(steps)
 
-            itertools.repeat(filter(bubble_sort(seq), seq), times=steps)
-
-            print(' '.join([str(x) for x in seq]))
+            if steps == 0:
+                print(seqlist)
+            else:
+                itertools.repeat(filter(bubble_sort(seq), seq), times=steps)
+                print(' '.join([str(x) for x in seq]))
 
         except StopIteration:
             break
@@ -63,9 +65,6 @@ def bubble_sort(seq):
         if seq[i+1] < seq[i]:
             seq[i], seq[i+1] = seq[i+1], seq[i]
 
-        i += 1
-
-    return seq
 
 
 
